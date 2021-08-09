@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>E-Shopping View Purchases Detail</title>
+
+  <link rel="stylesheet" href="static/Admin/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="static/Admin/vendors/base/vendor.bundle.base.css">
+  <link rel="stylesheet" href="static/Admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="static/Admin/css/style.css">
+  <link rel="shortcut icon" href="static/Admin/images/favicon.png" />
+
+  <script src="static/js/disable_prev.js"></script>
+
+</head>
+
+<body>
+  <div class="container-scroller">
+
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="navbar-brand-wrapper d-flex justify-content-center">
+        <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+          <a class="navbar-brand brand-logo" href="/Admin"><img src="static/Admin/images/logo.png" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="/Admin"><img src="static/Admin/images/favicon.png"
+              alt="logo" /></a>
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-sort-variant"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+
+        <ul class="navbar-nav navbar-nav-right">
+
+          <li class="nav-item nav-profile dropdown">
+
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+              {% if adminName %}
+              <span class="nav-profile-name">{{ adminName }}</span>
+              {% endif %}
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item" href="/admin_profile">
+                <i class="mdi mdi-account text-primary"></i>
+                Profile
+              </a>
+              <a class="dropdown-item" href="/adminAccountLogout">
+                <i class="mdi mdi-logout text-primary"></i>
+                Logout
+              </a>
+            </div>
+
+          </li>
+
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+
+      </div>
+    </nav>
+
+    <div class="container-fluid page-body-wrapper">
+
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/Admin">
+              <i class="mdi mdi-home menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="mdi mdi-view-headline menu-icon"></i>
+              <span class="menu-title">Products</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/view_products"> Products View </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/add_product"> Add Product </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/add_imagesColorQty"> Add Product Detail </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/add_product_sizes"> Add Product Sizes</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/update_product_qty"> Update Qty </a></li>
+
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/view_users_list">
+              <i class="mdi mdi-account menu-icon"></i>
+              <span class="menu-title">Users</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/purchases">
+              <i class="mdi mdi-sale menu-icon"></i>
+              <span class="menu-title">Purchases</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+
+              <div class="d-flex justify-content-between flex-wrap">
+
+                <div class="d-flex">
+
+                  <i class="mdi mdi-sale menu-icon text-muted hover-cursor"></i>
+                  <p class="text-muted mb-0 hover-cursor">&nbsp;Purchases Details</p>
+
+                </div>
+
+                {% if is_delivered %}
+                {% if is_delivered == 'no' %}
+                <div class="d-flex justify-content-between align-items-end flex-wrap">
+                  <button id="btnDelivered" class="btn btn-primary mt-2 mt-xl-0">Delivered</button>
+                </div>
+                {% endif %}
+                {% endif %}
+
+              </div>
+
+            </div>
+          </div>
+
+
+          {% if purchaseDetails %}
+          <div class="row">
+            <div class="col-md-12 stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  {% if purchase_id %}
+                  <p id="purchaseCode" class="card-title">Purchases ID : {{ purchase_id }}</p>
+                  {% endif %}
+                  {% if userData %}
+                  <p class="card-title">User Id : {{ userData[0] }}</p>
+                  <p class="card-title">User Name : {{ userData[1] }}</p>
+                  <p class="card-title">User Phone Number : <a href="tel:{{ userData[2] }}">{{ userData[2] }}</a></p>
+                  <p class="card-title">User Email : {{ userData[3] }}</p>
+                  {% endif %}
+                  <br>
+                  {% if date %}
+                  <p class="card-title">Purchased Date : {{ date }}</p>
+                  {% endif %}
+                  {% if is_delivered %}
+                  <p class="card-title">Purchases Is Delivered : {{ is_delivered }}</p>
+                  {% endif %}
+                  {% if total %}
+                  <p class="card-title">Purchases Is Delivered : Rs. {{ total }}</p>
+                  {% endif %}
+                  <div class="table-responsive">
+                    <table id="recent-purchases-listing" class="table">
+                      <thead>
+                        <tr>
+                          <th>Product Id</th>
+                          <th>Product Title</th>
+                          <th>Colour</th>
+                          <th>Size</th>
+                          <th>Item Count</th>
+                          <th>Price</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        {% for item in purchaseDetails %}
+                        <tr>
+                          <td>{{ item[0] }}</td>
+                          <td>{{ item[1] }}</td>
+                          <td>{{ item[2] }}</td>
+                          <td>{{ item[3] }}</td>
+                          <td>{{ item[4] }}</td>
+                          <td>{{ item[5] }}</td>
+                        </tr>
+                        {% endfor %}
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+        </div>
+
+        <footer class="footer">
+
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright &copy; 2021 All rights
+              reserved |
+              <a href="tel:0767950600">10024445 - M P M S Jayasinghe</a></span>
+          </div>
+
+        </footer>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+
+  <script>
+
+    var $rows = $('#recent-purchases-listing tr');
+    $('#txt_purchase_search').keyup(function () {
+      var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+      $rows.show().filter(function () {
+        var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+        return !~text.indexOf(val);
+      }).hide();
+    });
+
+
+    $(function () {
+      $('#btnDelivered').click(function () {
+
+        var form_data = new FormData();
+        form_data.append('purchaseCode', $('#purchaseCode').text());
+
+        $.ajax({
+          url: '/updatePurchaseDelivery',
+          enctype: 'multipart/form-data',
+          data: form_data,
+          contentType: false,
+          cache: false,
+          processData: false,
+          type: 'POST',
+        })
+          .done(function (data) {
+            if (data.redirect) {
+              window.location.href = data.redirect
+            }
+            else if (data.error_msg) {
+              alert(data.error_msg);
+            }
+            else {
+              alert("Some error occur")
+            }
+          });
+
+        event.preventDefault();
+      });
+    });
+
+
+  </script>
+
+
+  <script src="static/Admin/vendors/base/vendor.bundle.base.js"></script>
+
+  <script src="static/Admin/vendors/chart.js/Chart.min.js"></script>
+  <script src="static/Admin/vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="static/Admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+
+  <script src="static/Admin/js/off-canvas.js"></script>
+  <script src="static/Admin/js/hoverable-collapse.js"></script>
+  <script src="static/Admin/js/template.js"></script>
+
+  <script src="static/Admin/js/dashboard.js"></script>
+  <script src="static/Admin/js/data-table.js"></script>
+  <script src="static/Admin/js/jquery.dataTables.js"></script>
+  <script src="static/Admin/js/dataTables.bootstrap4.js"></script>
+
+  <script src="static/Admin/js/chart.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Shoping Cart</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--===============================================================================================-->
+	<link rel="icon" type="image/png" href="static/images/icons/favicon.png" />
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/bootstrap/css/bootstrap.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/fonts/iconic/css/material-design-iconic-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/fonts/linearicons-v1.0.0/icon-font.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/animate/animate.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/css-hamburgers/hamburgers.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/animsition/css/animsition.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/select2/select2.min.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/vendor/perfect-scrollbar/perfect-scrollbar.css">
+	<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="static/css/util.css">
+	<link rel="stylesheet" type="text/css" href="static/css/main.css">
+	<!--===============================================================================================-->
+
+	<script src="static/js/disable_prev.js"></script>
+
+</head>
+
+{% block body %}
+
+<body class="animsition">
+
+	<!-- Header -->
+	<header class="header-v4">
+		<!-- Header desktop -->
+		<div class="container-menu-desktop">
+			<!-- Topbar -->
+			<div class="top-bar">
+				<div class="content-topbar flex-sb-m h-full container">
+					<div class="left-top-bar">
+						<a class="cl7 hov-cl1 trans-04 m-r-16"
+							href="mailto:mpmsulakshana@gmail.com">mpmsulakshana@gmail.com</a>
+					</div>
+
+					<div class="right-top-bar flex-w h-full">
+
+						{% if session['userid']%}
+						<a href="/profile" class="flex-c-m trans-04 p-lr-25 js-show-profile">
+							My Account
+						</a>
+
+						<a href="/userAccountLogout" class="flex-c-m trans-04 p-lr-25">
+							Logout
+						</a>
+
+						{% else %}
+
+						<a href="/sign_in" class="flex-c-m trans-04 p-lr-25 js-show-login">
+							Login
+						</a>
+
+						{% endif %}
+
+					</div>
+				</div>
+			</div>
+
+			<div class="wrap-menu-desktop how-shadow1">
+				<nav class="limiter-menu-desktop container">
+
+					<!-- Logo desktop -->
+					<a href="#" class="logo">
+						<img src="static/images/icons/logo.png" alt="IMG-LOGO">
+					</a>
+
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu">
+							<li class="active-menu">
+								<a href="/">Home</a>
+							</li>
+
+							<li>
+								<a href="/product">Categories</a>
+							</li>
+							
+							<li>
+								<a href="/contact">Contact</a>
+							</li>
+						</ul>
+					</div>
+
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m">
+						<a href="/cart" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10"
+							data-notify="0">
+							<i class="zmdi zmdi-shopping-cart"></i>
+						</a>
+
+						<a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10"
+							data-notify="0">
+							<i class="zmdi zmdi-favorite-outline"></i>
+						</a>
+					</div>
+				</nav>
+			</div>
+		</div>
+
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->
+			<div class="logo-mobile">
+				<a href="/"><img src="static/images/icons/logo.png" alt="IMG-LOGO"></a>
+			</div>
+
+			<!-- Icon header -->
+			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
+				<a href="/cart" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10" data-notify="0">
+					<i class="zmdi zmdi-shopping-cart"></i>
+				</a>
+
+				<a href="/wishlist" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10"
+					data-notify="0">
+					<i class="zmdi zmdi-favorite-outline"></i>
+				</a>
+			</div>
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
+
+
+		<!-- Menu Mobile -->
+		<div class="menu-mobile">
+			<ul class="topbar-mobile">
+				<li>
+					<div class="left-top-bar">
+						<a class="cl7 hov-cl1 trans-04 m-r-16"
+							href="mailto:mpmsulakshana@gmail.com">mpmsulakshana@gmail.com</a>
+					</div>
+				</li>
+
+				<li>
+					<div class="right-top-bar flex-w h-full">
+
+						{% if session['userid']%}
+						<a href="/profile" class="flex-c-m p-lr-10 trans-04 js-show-profile">
+							My Account
+						</a>
+
+						<a href="/userAccountLogout" class="flex-c-m trans-04 p-lr-25">
+							Logout
+						</a>
+
+						{% else %}
+
+						<a href="/sign_in" class="flex-c-m trans-04 p-lr-25">
+							Login
+						</a>
+						{% endif %}
+
+					</div>
+				</li>
+			</ul>
+
+			<ul class="main-menu-m">
+				<li class="active-menu">
+					<a href="/">Home</a>
+				</li>
+
+				<li>
+					<a href="/product">Categories</a>
+				</li>
+
+				<li>
+					<a href="/contact">Contact</a>
+				</li>
+			</ul>
+		</div>
+
+	</header>
+
+
+	<!-- breadcrumb -->
+	<div class="container">
+		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+			<a href="/" class="stext-109 cl8 hov-cl1 trans-04">
+				Home
+				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+			</a>
+
+			<span class="stext-109 cl4">
+				Shopping Cart
+			</span>
+
+		</div>
+	</div>
+
+
+	<!-- Shoping Cart -->
+	<form class="bg0 p-t-75 p-b-85">
+		<div class="container">
+			{% if cart_details %}
+				<div class="row">
+					<div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+						<div class="m-l-25 m-r--38 m-lr-0-xl">
+							<div class="wrap-table-shopping-cart">
+								
+								
+								<table class="table-shopping-cart">
+									<tr class="table_head">
+										<th class="column-1">Product</th>
+										<th class="column-2"></th>
+										<th class="column-3">Price</th>
+										<th class="column-4">Colour, Size & Count</th>
+										<th class="column-5">Total</th>
+									</tr>
+
+									{% for item in cart_details %}
+									<tr class="table_row">
+										<td class="column-1">
+											<a href="{{ url_for('remove_item_from_cart', 
+																product_code = item['product_code'], 
+																product_color = item['product_color'], 
+																product_size = item['product_size']) }}">
+												<div class="how-itemcart1">
+												
+													<img src="static/images/product_images/{{ item['product_icon'] }}" alt="IMG">
+												
+												</div>
+											</a>
+										</td>
+										<td class="column-2">
+											{{ item['product_code'] }} <br>
+											<a href="{{ url_for('product_details', 
+													product_code=item['product_code'], 
+													product_color=item['product_color']) }}">
+												{{ item['product_title'] }}
+											</a>
+										</td>
+										<td class="column-3">Rs. {{ item['product_price'] }} </td>
+										<td class="column-4">{{ item['product_color'] }} - {{ item['product_size'] }}
+											<br> {{ item['product_count'] }}
+										</td>
+										<td class="column-5">Rs. {{ item['total'] }}</td>
+									</tr>
+									{% endfor %}
+
+								</table>
+								
+
+							</div>
+
+							<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+								<a href="{{ url_for('clear_cart') }}">
+									<div
+										class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
+										Clear Cart
+									</div>
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-10 col-lg-7 col-xl-5 m-lr-auto m-b-50">
+						<div class="bor10 p-lr-40 p-t-30 p-b-40 m-l-63 m-r-40 m-lr-0-xl p-lr-15-sm">
+							<h4 class="mtext-109 cl2 p-b-30">
+								Cart Totals
+							</h4>
+
+							<div class="flex-w flex-t bor12 p-b-13">
+								<div class="size-208">
+									<span class="stext-110 cl2">
+										Subtotal:
+									</span>
+								</div>
+
+								<div class="size-209">
+									<span class="mtext-110 cl2">
+										{% if total_price %}
+											Rs. {{ total_price }}
+										{% endif %}
+									</span>
+								</div>
+							</div>
+
+							<div class="flex-w flex-t bor12 p-t-15 p-b-30">
+
+								<div class="size-208">
+									<span class="stext-110 cl2">
+										Payment Method:
+									</span>
+								</div>
+
+								<div class="size-209">
+									<span class="mtext-110 cl2">
+										Cash On Pay
+									</span>
+								</div>
+
+							</div>
+
+							<div class="flex-w flex-t p-t-27 p-b-33">
+								<div class="size-208">
+									<span class="mtext-101 cl2">
+										Total:
+									</span>
+								</div>
+
+								<div class="size-209 p-t-1">
+									<span class="mtext-110 cl2">
+										{% if total_price %}
+											Rs. {{ total_price }}
+										{% endif %}
+									</span>
+								</div>
+							</div>
+
+							<button id="btn_bill_confirm" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+								Proceed to Checkout
+							</button>
+						</div>
+					</div>
+				</div>
+			
+			{% else %}
+				Your cart is empty
+			{% endif %}
+			
+		</div>
+	</form>
+
+	<!-- Footer -->
+	<footer class="bg3 p-t-75 p-b-32">
+		<div class="container">
+			<p class="stext-107 cl6 txt-center">
+				Copyright &copy; 2021 All rights reserved | <a class="cl7 hov-cl1 trans-04 m-r-16"
+					href="tel:0767950600">10024445 - M P M S
+					Jayasinghe</a>
+			</p>
+		</div>
+	</footer>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+
+	<script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+
+	<script>
+
+		$(function () {
+			$('#btn_bill_confirm').click(function () {
+
+				var confirm_msg = confirm("Are you sure to complete shopping cart");
+				if (confirm_msg == true) {
+					txt = "You pressed OK!";
+					
+					var cart_msg = 'yes'
+					$.ajax({
+						url: '/cart_complete',
+						data: {
+							cart_msg: cart_msg
+						},
+						type: 'POST',
+					})
+						.done(function (data) {
+							if (data.redirect) {
+								window.location.href = data.redirect
+							}
+							else if (data.count_error) {
+								alert(data.count_error);
+							}
+							else {
+								alert("Some error occur")
+							}
+						});
+
+					event.preventDefault();
+				}
+			});
+		});
+
+	</script>
+
+	<!--===============================================================================================-->
+	<script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="static/vendor/animsition/js/animsition.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="static/vendor/bootstrap/js/popper.js"></script>
+	<script src="static/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="static/vendor/select2/select2.min.js"></script>
+	<script>
+		$(".js-select2").each(function () {
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+	<!--===============================================================================================-->
+	<script src="static/vendor/MagnificPopup/jquery.magnific-popup.min.js"></script>
+	<!--===============================================================================================-->
+	<script src="static/vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+	<script>
+		$('.js-pscroll').each(function () {
+			$(this).css('position', 'relative');
+			$(this).css('overflow', 'hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function () {
+				ps.update();
+			})
+		});
+	</script>
+	<!--===============================================================================================-->
+	<script src="static/js/main.js"></script>
+
+</body>
+{% endblock %}
+
+</html>

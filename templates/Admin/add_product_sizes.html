@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>E-Shopping Add product sizes</title>
+
+  <link rel="stylesheet" href="static/Admin/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="static/Admin/vendors/base/vendor.bundle.base.css">
+  <link rel="stylesheet" href="static/Admin/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="static/Admin/css/style.css">
+  <link rel="shortcut icon" href="static/Admin/images/favicon.png" />
+
+  <script src="static/js/disable_prev.js"></script>
+
+</head>
+
+{% block body %}
+<body>
+  <div class="container-scroller">
+
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="navbar-brand-wrapper d-flex justify-content-center">
+        <div class="navbar-brand-inner-wrapper d-flex justify-content-between align-items-center w-100">
+          <a class="navbar-brand brand-logo" href="/Admin"><img src="static/Admin/images/logo.png" alt="logo" /></a>
+          <a class="navbar-brand brand-logo-mini" href="/Admin"><img src="static/Admin/images/favicon.png"
+              alt="logo" /></a>
+          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+            <span class="mdi mdi-sort-variant"></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+
+        <ul class="navbar-nav navbar-nav-right">
+
+          <li class="nav-item nav-profile dropdown">
+
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" id="profileDropdown">
+              {% if adminName %}
+              <span class="nav-profile-name">{{ adminName }}</span>
+              {% endif %}
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item" href="/admin_profile">
+                <i class="mdi mdi-account text-primary"></i>
+                Profile
+              </a>
+              <a class="dropdown-item" href="/adminAccountLogout">
+                <i class="mdi mdi-logout text-primary"></i>
+                Logout
+              </a>
+            </div>
+
+          </li>
+
+        </ul>
+        <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
+          data-toggle="offcanvas">
+          <span class="mdi mdi-menu"></span>
+        </button>
+
+      </div>
+    </nav>
+
+    <div class="container-fluid page-body-wrapper">
+
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="/Admin">
+              <i class="mdi mdi-home menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
+              <i class="mdi mdi-view-headline menu-icon"></i>
+              <span class="menu-title">Products</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="auth">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="/view_products"> Products View </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/add_product"> Add Product </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/add_imagesColorQty"> Add Product Detail </a></li>
+                <li class="nav-item"> <a class="nav-link" href="/add_product_sizes"> Add Product Sizes</a></li>
+                <li class="nav-item"> <a class="nav-link" href="/update_product_qty"> Update Qty </a></li>
+
+              </ul>
+            </div>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/view_users_list">
+              <i class="mdi mdi-account menu-icon"></i>
+              <span class="menu-title">Users</span>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="/purchases">
+              <i class="mdi mdi-sale menu-icon"></i>
+              <span class="menu-title">Purchases</span>
+            </a>
+          </li>
+
+        </ul>
+      </nav>
+
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+
+              <div class="d-flex">
+
+                <i class="mdi mdi-home text-muted hover-cursor"></i>
+                <p class="text-muted mb-0 hover-cursor">&nbsp;Product &nbsp;/&nbsp; Add Product Sizes</p>
+
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="row">
+
+            <div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+
+
+                  <form class="forms-sample" id="productDetailsForm">
+
+                    <div class="form-group">
+
+                      <label for="lbl">Product Code</label>
+                      <input class="form-control" list="productCodesBrowser" name="txt_product_code"
+                        id="txt_product_code" placeholder="Product Code" 
+                        {% if product_item_code %}
+                        value="{{ product_item_code }}"
+                        disabled
+                        {% endif %}
+                        required>
+
+                      {% if product_codes %}
+                      <datalist id="productCodesBrowser">
+                        {% for product_code in product_codes %}
+                        <option value="{{ product_code[0] }}">
+                          {% endfor %}
+                      </datalist>
+                      {% endif %}
+
+                    </div>
+
+                    <div class="form-group">
+                      <label for="selectSubCategory">Select Product Colour</label>
+                      <select class="form-control" id="txt_product_color" >
+                        {% if product_colors %}
+                        {% for color in product_colors %}
+                          <option>{{ color[0] }}</option>
+                        {% endfor %}
+                        {% endif %}
+
+                        {% if product_item_color %}
+                        <option>{{ product_item_color }}</option>
+                        {% endif %}
+
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+
+                      <label for="lbl">Size</label>
+                      <input class="form-control" list="productCodesBrowser" name="txt_product_size"
+                        id="txt_product_size" placeholder="Product Size"value="None" required>
+
+                      
+                      <datalist id="productCodesBrowser">
+                        {% if product_codes %}
+                        {% for product_code in product_codes %}
+                        <option value="{{ product_code[0] }}">
+                          {% endfor %}
+                          {% endif %}
+                      </datalist>
+                      
+
+                    </div>
+
+                    <div class="form-group">
+                      <label for="lbl">Qty</label>
+                      <input type="number" class="form-control" id="txt_qty" placeholder="Add Qty" min="1">
+                    </div>
+
+                    <button type="submit" id="btn_add_size" class="btn btn-primary mr-2">Add</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <footer class="footer">
+
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright &copy; 2021 All rights
+              reserved |
+              <a href="tel:0767950600">10024445 - M P M S Jayasinghe</a></span>
+          </div>
+
+        </footer>
+
+      </div>
+    </div>
+  </div>
+
+
+  <script src="static/vendor/jquery/jquery-3.2.1.min.js"></script>
+
+  <script>
+
+    $(function () {
+      $('#btn_add_size').click(function () {
+
+        var form_data = new FormData();
+        form_data.append('txt_product_code', $('#txt_product_code').val());
+        form_data.append('txt_product_color', $('#txt_product_color').val());
+        form_data.append('txt_product_size', $('#txt_product_size').val());
+        form_data.append('txt_qty', $('#txt_qty').val());
+
+
+        $.ajax({
+          url: '/addNewProductSize',
+          enctype: 'multipart/form-data',
+          data: form_data,
+          contentType: false,
+          cache: false,
+          processData: false,
+          type: 'POST',
+        })
+          .done(function (data) {
+            if (data.redirect) {
+              window.location.href = data.redirect
+            }
+            else if (data.error_msg) {
+              alert(data.error_msg);
+            }
+            else if (data.success_msg) {
+              $("#productDetailsForm")[0].reset();
+              alert(data.success_msg);
+            }
+            else {
+              alert("Some error occur")
+            }
+          });
+
+        event.preventDefault();
+      });
+    });
+
+  </script>
+
+  <script src="static/Admin/vendors/base/vendor.bundle.base.js"></script>
+
+  <script src="static/Admin/vendors/chart.js/Chart.min.js"></script>
+  <script src="static/Admin/vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="static/Admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+
+  <script src="static/Admin/js/off-canvas.js"></script>
+  <script src="static/Admin/js/hoverable-collapse.js"></script>
+  <script src="static/Admin/js/template.js"></script>
+
+  <script src="static/Admin/js/dashboard.js"></script>
+  <script src="static/Admin/js/data-table.js"></script>
+  <script src="static/Admin/js/jquery.dataTables.js"></script>
+  <script src="static/Admin/js/dataTables.bootstrap4.js"></script>
+
+  <script src="static/Admin/js/file-upload.js"></script>
+  <script src="static/Admin/js/chart.js"></script>
+
+</body>
+{% endblock %}
+
+</html>
